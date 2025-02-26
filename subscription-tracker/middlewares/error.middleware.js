@@ -1,6 +1,6 @@
 const errorMiddleWare = (err, req, res, next) => {
   try {
-    let error = { ...er };
+    let error = { ...err };
 
     error.message = err.message;
     console.error(err);
