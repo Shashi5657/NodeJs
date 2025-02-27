@@ -22,6 +22,7 @@ const subscriptionSchema = new mongoose.Schema(
     frequency: {
       type: String,
       enum: ["daily", "weekly", "monthly", "yearly"],
+      required: true,
     },
     category: {
       type: String,
@@ -66,27 +67,37 @@ const subscriptionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-subscriptionSchema.pre("save", function (next) {
+subscriptionSchema.pre("validate", function (next) {
   if (!this.renewalDate) {
-    const renewalPerios = {
+    const renewalPeriods = {
       daily: 1,
       weekly: 7,
       monthly: 30,
       yearly: 365,
     };
 
+    if (!this.frequency) {
+      return next(
+        new Error("Subscription frequency is required to set renewalDate.")
+      );
+    }
+
     this.renewalDate = new Date(this.startDate);
     this.renewalDate.setDate(
-      this.renewalDate.getDate() + renewalPerios[this.frequency]
+      this.renewalDate.getDate() + renewalPeriods[this.frequency]
     );
-  }
-
-  if (this.renewalDate < new Date()) {
-    this.status = "expired";
   }
 
   next();
 });
 
-const Subscription = mongoose.model("Subsciption", subscriptionSchema);
+subscriptionSchema.pre("save", function (next) {
+  if (this.renewalDate < new Date()) {
+    this.status = "expired";
+  }
+  next();
+});
+
+const Subscription = mongoose.model("Subscription", subscriptionSchema);
+
 export default Subscription;
