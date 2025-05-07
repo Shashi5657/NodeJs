@@ -1,7 +1,6 @@
-import express, { urlencoded } from "express";
+import express from "express";
 import fs from "fs";
 import users from "./MOCK_DATA.js";
-const app = express();
 import authRouter from "./routes/authRoute.js";
 import connectToDatabase from "./libs/mongodb.js";
 import urlRouter from "./routes/urlRoute.js";
@@ -10,20 +9,40 @@ import {
   authMiddleware,
   restrictToUser,
 } from "./middlewares/authMiddleware.js";
+import { Server } from "socket.io";
+import http from "http";
+import path from "path";
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  connectionStateRecovery: {}
+});
 
 app.use(express.urlencoded({ extended: false }));
-
-connectToDatabase();
-
+app.use(express.static(path.resolve("public")));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/url", authMiddleware, restrictToUser(["admin"]), urlRouter);
+connectToDatabase();
 
+io.on("connection", (socket) => {
+  console.log("New client connected");
+  socket.on("chat message", (msg) => {
+    console.log("message:" + msg);
+    io.emit("chat message", msg);
+  });
+});
+
+app.use("/url", authMiddleware, restrictToUser(["admin"]), urlRouter);
 app.use("/auth", authRouter);
 
 app.get("/", (req, res) => {
   res.send(`Hello ${req.query.name}, This is Home Page`);
+});
+
+app.get("/socket", (req, res) => {
+  res.sendFile(path.resolve("public/index.html"));
 });
 
 app.get("/users", (req, res) => {
@@ -85,4 +104,4 @@ app
 //   //delete the user
 // });
 
-app.listen(8000, () => console.log("Server started on PORT 8000"));
+server.listen(8000, () => console.log("Server started on PORT 8000"));

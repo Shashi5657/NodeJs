@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head") %>
+  <body>
+    <%- include("./partials/nav") %>
+    <div class="container mt-4">
+      <h1><%= blog.title %></h1>
+      <img
+        src="<%= blog.coverImage %>"
+        alt="Cover image"
+        style="width: 700px; margin-bottom: 10px"
+      />
+      <pre><%= blog.body %></pre>
+    </div>
+    <div class="container mt-4">
+      <% if (blog.createdBy && blog.createdBy.profileImageUrl) { %>
+      <img
+        src="<%= blog.createdBy.profileImageUrl %>"
+        alt="profile image"
+        style="width: 50px; margin-bottom: 10px"
+        onerror="this.src='/images/default.png'"
+      />
+      <% } else { %>
+      <img
+        src="/images/default.png"
+        alt="default profile"
+        style="width: 50px; margin-bottom: 10px"
+      />
+      <% } %>
+      <p><strong>Author:</strong> <%= blog.createdBy?.fullName %></p>
+    </div>
+
+    <div class="container">
+      <h1>Comments (<%= comments.length %>)</h1>
+      <form action="/blog/comment/<%= blog._id %>" method="post">
+        <textarea class="form-control" id="content" name="content"></textarea>
+        <button type="submit" class="btn btn-sm btn-primary">Add</button>
+      </form>
+    </div>
+
+    <div>
+      <% comments.forEach(comment => { %>
+      <div class="card width-50 align-start mt-3">
+        <img
+          src="<%= comment.createdBy.profileImageUrl %>"
+          alt="profile image"
+          style="width: 50px; margin-bottom: 10px"
+          onerror="this.src='/images/default.png'"
+        />
+        <pre>
+          <strong><%= comment.createdBy.fullName %>:</strong>
+         <%=  comment.content %>
+        </pre>
+      </div>
+      <% }); %>
+    </div>
+
+    <%- include("./partials/script") %>
+  </body>
+</html>
