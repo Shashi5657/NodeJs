@@ -22,7 +22,16 @@ const orderSchema = new mongoose.Schema(
     customer: {
       type: mongoose.Schema.Types.ObjectId,
     },
-    orderItems: [orderItemSchema],
+    orderItems: { type: [orderItemSchema] },
+    address: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["Pending", "Shipped", "Delivered", "Cancelled"],
+      default: "Pending",
+    },
   },
   { timestamps: true }
 );
