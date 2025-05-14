@@ -1,0 +1,1 @@
+1. Initiate the NodeJs project using npm init

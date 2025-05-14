@@ -1,0 +1,15 @@
+{
+  "name": "master-nodejs",
+  "version": "1.0.0",
+  "description": "covering the entire nodejs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shashidhar Sangepu",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
