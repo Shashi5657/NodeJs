@@ -4,3 +4,6 @@
 4. Create app.js constants.js & index.js files
 5. Create folders for each of controllers, DB, middlewares, models, routes and utils for proper code structuring and segregation
 6. Install dotenv for accessing the env files. Initiate where the code starts probably index.js file
+7. Install prettier for common formatting across the team
+8. install husky & lint-staged
+9. run npx husky init
