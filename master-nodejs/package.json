@@ -21,7 +21,9 @@
   "author": "Shashidhar Sangepu",
   "license": "ISC",
   "devDependencies": {
+    "@biomejs/biome": "^2.3.8",
     "dotenv": "^17.2.3",
+    "lefthook": "^2.0.9",
     "nodemon": "^3.1.11",
     "prettier": "^3.7.4"
   }
