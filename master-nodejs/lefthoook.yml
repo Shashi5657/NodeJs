@@ -1,0 +1,18 @@
+# lefthook.yml
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: "**/*.{js,jsx,ts,tsx,json}"
+      run: npx @biomejs/biome format --write --no-errors-on-unmatched {staged_files}
+
+    lint:
+      glob: "**/*.{js,jsx,ts,tsx,json}"
+      run: npx @biomejs/biome lint --no-errors-on-unmatched {staged_files}
+
+    check:
+      glob: "**/*.{js,jsx,ts,tsx,json}"
+      run: npx @biomejs/biome check --no-errors-on-unmatched {staged_files}
+
+    build:
+      run: npm run build
