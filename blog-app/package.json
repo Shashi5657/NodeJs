@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Shashi5657/NodeJs#readme",
   "description": "",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",

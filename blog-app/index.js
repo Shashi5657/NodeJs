@@ -3,6 +3,8 @@ import path from "node:path";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRoute from "./routes/authRoute.js";
+import cookieparser from "cookie-parser";
+import { checkForCookieToken } from "./middleware/authMiddleware.js";
 
 dotenv.config();
 const port = process.env.PORT || 8001;
@@ -10,6 +12,8 @@ const port = process.env.PORT || 8001;
 const app = e();
 app.use(e.urlencoded({ extended: false }));
 app.use(e.json());
+app.use(cookieparser());
+app.use(checkForCookieToken("token"));
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));

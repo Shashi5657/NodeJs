@@ -1,5 +1,6 @@
 import mongoose, { Schema, Model } from "mongoose";
 import crypto from "node:crypto";
+import { createtoken } from "../services/authService.js";
 
 const userSchema = new Schema(
   {
@@ -63,7 +64,8 @@ userSchema.static("matchPassword", async function (email, password) {
     throw new Error("Invalid password");
   }
 
-  return user;
+  const token = await createtoken(user);
+  return token;
 });
 
 const User = mongoose.model("User", userSchema);

@@ -31,9 +31,20 @@ router.post("/signup", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.matchPassword(email, password);
+  try {
+    const token = await User.matchPassword(email, password);
 
-  console.log(user, "user");
+    console.log(token, "token");
+    res.cookie("token", token).redirect("/");
+  } catch (error) {
+    return res.render("login", {
+      error: error,
+    });
+  }
+});
+
+router.get("/logout", (req, res) => {
+  res.clearCookie("token");
   res.redirect("/");
 });
 
