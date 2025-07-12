@@ -3,8 +3,27 @@
   <%- include("./partials/head") %>
   <body>
     <%- include("./partials/nav") %>
-    <p><%= JSON.stringify(locals.user) %></p>
     <h1>Hii</h1>
-    <%- include("./partials/script") %>
+    <% if (blogs && blogs.length) { %>
+    <div class="container m-3">
+      <% blogs.forEach(blog => { %>
+      <div class="card-body m-3" style="width: 18rem">
+        <% if (blog.coverImage) { %>
+        <img
+          class="card-img-top"
+          src="<%= blog.coverImage %>"
+          alt="Cover image"
+        />
+        <% } %>
+        <div class="card-body">
+          <h5 class="card-title"><%= blog.title %></h5>
+          <a href="/blog/<%= blog._id %>" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <p>No blogs found.</p>
+    <% } %> <%- include("./partials/script") %>
   </body>
 </html>
