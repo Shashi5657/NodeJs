@@ -43,7 +43,6 @@ const medicalRecordSchema = new mongoose.Schema(
         notes: { type: String },
       },
     ],
-
     labTests: [
       {
         testName: { type: String, required: true },
@@ -52,21 +51,17 @@ const medicalRecordSchema = new mongoose.Schema(
         attachmentUrl: { type: String }, // If you upload reports
       },
     ],
-
     allergiesNoted: {
       type: [String],
       default: [],
     },
-
     followUpRequired: {
       type: Boolean,
       default: false,
     },
-
     followUpDate: {
       type: Date,
     },
-
     notes: {
       type: String,
     },
