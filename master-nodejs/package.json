@@ -10,11 +10,11 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "**/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{json,md,css,html}": [
+    "**/*.{json,md,css,html}": [
       "prettier --write"
     ]
   },
